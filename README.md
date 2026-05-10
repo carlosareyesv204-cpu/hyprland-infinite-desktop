@@ -26,6 +26,16 @@ You only need Python 3 installed on your system.
   ```bash
     sudo apt install python3
     ```
+## 🔑 Permissions
+1.Add your user to the group
+```bash
+   sudo usermod -aG input $USER
+  ```
+2.Restart your session
+```bash
+   sudo reboot
+  ```
+
 ## 📥 Installation
 
 1. **Create the directory:**
