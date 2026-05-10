@@ -172,7 +172,7 @@ def kbd_reader():
     global super_pressed, alt_pressed, ctrl_pressed
     
     fd = open(kbd_dev, 'rb')
-    # No usar non-blocking para mantener simplicidad
+    # No use non-blocking
     while True:
         data = fd.read(EVENT_SIZE)
         if not data or len(data) < EVENT_SIZE: 
@@ -218,12 +218,12 @@ def mouse_reader():
                     elif code == REL_Y:
                         acc_y += value * speed * sign
                 else:
-                    # Solo limpiar si no estamos arrastrando
+                    # We only clean if we're not dragging.
                     if not (super_pressed and alt_pressed and btn_left):
                         acc_x = 0.0
                         acc_y = 0.0
 
-# PRECARGAR - elimina retraso inicial
+# Reboot
 print("Precargando...", flush=True)
 try:
     subprocess.run(['hyprctl', 'activeworkspace', '-j'], capture_output=True, text=True, timeout=0.5)
@@ -237,7 +237,7 @@ threading.Thread(target=mouse_reader, daemon=True).start()
 
 print("Infinite Desktop (OPTIMIZADO - funcionando) - Ctrl+Super+←/→", flush=True)
 
-# Loop principal - VERSIÓN SIMPLE QUE FUNCIONA
+# Principal loop
 while True:
     time.sleep(0.016)  # ~60 FPS
     
