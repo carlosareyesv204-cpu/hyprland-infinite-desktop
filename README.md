@@ -31,3 +31,28 @@ You only need Python 3 installed on your system.
    ```bash
    mkdir -p ~/scripts
    ```
+2. **Download the scripts:**
+Place infinite-desktop.sh, infinite_desktop_core.py, and infinite-desktop-toggle.sh inside ~/scripts/.
+
+3. **Grant execution permissions:**
+  ```bash
+    chmod +x ~/scripts/infinite-desktop.sh ~/scripts/infinite-desktop-toggle.sh
+  ```
+## ⚙️ Configuration
+Add the following lines to your ~/.config/hypr/hyprland.conf:
+
+1. **Auto-start**
+   ```bash
+     # Launch the infinite desktop daemon (replace 'your_user' with your actual username)
+     exec-once = /home/your_user/scripts/infinite-desktop.sh
+   ```
+2. **Keybindings**
+   Add these binds to enable keyboard navigation between your floating windows:
+   ```bash
+     bind = CTRL SUPER, right, exec, echo right > /tmp/infinite-nav
+     bind = CTRL SUPER, left, exec, echo left > /tmp/infinite-nav
+   ```
+
+## 🖱️ How to use
+-Panning: Hold ***SUPER + ALT + Left Click*** and move your mouse to slide the entire desktop.
+-Navigation: Press ***CTRL + SUPER + Left/Right Arrow*** to center and focus the next floating window.
