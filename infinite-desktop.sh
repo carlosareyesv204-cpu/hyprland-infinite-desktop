@@ -2,14 +2,14 @@
 sleep 3
 SPEED=1.6
 
-# Obtener el directorio donde está este script
+# Get the directory where this script is located
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# Detectar teclado - priorizando teclados reales (sin "mouse" en el nombre)
+# Detect the keyboard - prioritizing real keyboards (without "mouse" in the name)
 KBD_DEV=$(python3 -c "
 import glob, os
 
-# Palabras que indican que NO es un teclado real
+# Words indicating it is NOT a real keyboard
 ignore_words = ['mouse', 'optical', 'system control', 'consumer control']
 real_keyboard = None
 
@@ -18,11 +18,11 @@ for dev in sorted(glob.glob('/dev/input/event*')):
         with open('/sys/class/input/'+os.path.basename(dev)+'/device/name') as f:
             name = f.read().strip().lower()
         
-        # Si tiene palabras a ignorar, saltar
+        # If it has words to ignore, skip
         if any(word in name for word in ignore_words):
             continue
             
-        # Verificar que sea un teclado
+        # Verify it is a keyboard
         if 'keyboard' in name or 'kbd' in name or 'gaming keyboard' in name:
             with open('/sys/class/input/'+os.path.basename(dev)+'/device/capabilities/ev') as f:
                 caps = int(f.read().strip(), 16)
@@ -32,14 +32,14 @@ for dev in sorted(glob.glob('/dev/input/event*')):
     except:
         continue
 
-# Si no encontramos un teclado "limpio", buscar cualquier teclado que no sea del ratón
+# If no clean keyboard found, look for any keyboard that is not a mouse
 if not real_keyboard:
     for dev in sorted(glob.glob('/dev/input/event*')):
         try:
             with open('/sys/class/input/'+os.path.basename(dev)+'/device/name') as f:
                 name = f.read().strip().lower()
             
-            # Excluir explícitamente el teclado del ratón
+            # Explicitly exclude the mouse keyboard
             if 'optical mouse keyboard' in name:
                 continue
                 
@@ -55,20 +55,20 @@ if not real_keyboard:
 print(real_keyboard if real_keyboard else '')
 ")
 
-# Detectar ratón - buscar el dispositivo que es específicamente un mouse
+# Detect the mouse
 MOUSE_DEV=$(python3 -c "
 import glob, os
 mouse_found = None
 for dev in sorted(glob.glob('/dev/input/event*')):
     try:
-        # Verificar que tenga capacidades de movimiento
+        # Verify it has movement capabilities
         with open('/sys/class/input/'+os.path.basename(dev)+'/device/capabilities/rel') as f:
             caps = int(f.read().strip(), 16)
         if caps & 0b11:
             with open('/sys/class/input/'+os.path.basename(dev)+'/device/name') as f:
                 name = f.read().strip().lower()
             
-            # Priorizar el que dice "mouse" y no tiene "keyboard"
+            # Prioritize the one that says "mouse" and does not have "keyboard"
             if 'mouse' in name and 'keyboard' not in name:
                 print(dev)
                 break
@@ -81,10 +81,10 @@ if not mouse_found:
     print('')
 ")
 
-# Verificar detección
+# Verify the detection
 if [ -z "$KBD_DEV" ]; then
-    echo "❌ Error: No se pudo detectar el teclado" >&2
-    echo "Dispositivos de teclado encontrados:" >&2
+    echo "❌ Error: Keyboard could not be detected" >&2
+    echo "Keyboard devices found:" >&2
     for dev in /dev/input/event*; do
         name=$(cat "/sys/class/input/$(basename $dev)/device/name" 2>/dev/null)
         if echo "$name" | grep -qi "keyboard\|kbd"; then
@@ -95,8 +95,8 @@ if [ -z "$KBD_DEV" ]; then
 fi
 
 if [ -z "$MOUSE_DEV" ]; then
-    echo "❌ Error: No se pudo detectar el ratón" >&2
-    echo "Dispositivos de ratón encontrados:" >&2
+    echo "❌ Error: Mouse could not be detected" >&2
+    echo "Mouse devices found:" >&2
     for dev in /dev/input/event*; do
         name=$(cat "/sys/class/input/$(basename $dev)/device/name" 2>/dev/null)
         if echo "$name" | grep -qi "mouse\|optical"; then
@@ -106,11 +106,11 @@ if [ -z "$MOUSE_DEV" ]; then
     exit 1
 fi
 
-echo "✅ Detectados: teclado=$KBD_DEV ratón=$MOUSE_DEV"
+echo "✅ Detected: keyboard=$KBD_DEV mouse=$MOUSE_DEV"
 
-# Verificación de seguridad
+# Safety check
 if [ "$KBD_DEV" = "$MOUSE_DEV" ]; then
-    echo "❌ ERROR: Teclado y ratón son el mismo dispositivo" >&2
+    echo "❌ ERROR: Keyboard and mouse are the same device" >&2
     exit 1
 fi
 

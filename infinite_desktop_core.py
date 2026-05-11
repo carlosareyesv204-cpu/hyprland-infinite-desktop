@@ -224,20 +224,20 @@ def mouse_reader():
                         acc_y = 0.0
 
 # Reboot
-print("Precargando...", flush=True)
+print("Preloading...", flush=True)
 try:
     subprocess.run(['hyprctl', 'activeworkspace', '-j'], capture_output=True, text=True, timeout=0.5)
     subprocess.run(['hyprctl', 'clients', '-j'], capture_output=True, text=True, timeout=0.5)
 except:
     pass
-print("¡Listo! Moviendo ventanas...", flush=True)
+print("Ready! Moving windows...", flush=True)
 
 threading.Thread(target=kbd_reader, daemon=True).start()
 threading.Thread(target=mouse_reader, daemon=True).start()
 
-print("Infinite Desktop (OPTIMIZADO - funcionando) - Ctrl+Super+←/→", flush=True)
+print("Infinite Desktop (OPTIMIZED - working) - Ctrl+Super+←/→", flush=True)
 
-# Principal loop
+# Main loop
 while True:
     time.sleep(0.016)  # ~60 FPS
     
