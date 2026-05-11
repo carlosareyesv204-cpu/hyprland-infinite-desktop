@@ -106,7 +106,7 @@ You do not need to manually clone this repository or run `chmod`. You can instal
   ```
   3. **Rebuild your system:**
   ```bash
-  sudo nixos-rebuild switch --flake .#your-hostname`
+  sudo nixos-rebuild switch --flake .#your-hostname
   ```
 
 ## 🖱️ How to use
