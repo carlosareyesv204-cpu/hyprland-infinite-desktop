@@ -30,7 +30,7 @@ You only need Python 3 installed on your system.
   sudo apt install python3
     ```
 ## 🔑 Permissions
-### 🐧 On most distributions
+### 🐧 Most distributions
 1.Add your user to the group
 ```bash
 sudo usermod -aG input $USER
@@ -39,7 +39,7 @@ sudo usermod -aG input $USER
 ```bash
 sudo reboot
   ```
-### ❄️ On Nix OS
+### ❄️ NixOS
 Add the `input` group to user's `extraGroups` in `configuration.nix` and reboot to apply.
 
 ```nix
@@ -48,7 +48,7 @@ users.users.<yourusername>.extraGroups = [ "input" ];
 
 ## 📥 Installation
 
-### 🐧 On most distributions
+### 🐧 Most distributions
 
 1. **Create the directory:**
    All scripts must be stored in a dedicated folder in your home directory:
@@ -77,7 +77,7 @@ Add the following lines to your ~/.config/hypr/hyprland.conf:
    bind = CTRL SUPER, left, exec, echo left > /tmp/infinite-nav
    ```
 
-### ❄️ On Nix OS (Flakes)
+### ❄️ NixOS (Flakes)
 You do not need to manually clone this repository or run `chmod`. You can install and configure it entirely through your Nix files.
 
 1. **Add the input:**
