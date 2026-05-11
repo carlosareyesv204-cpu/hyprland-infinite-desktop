@@ -21,6 +21,8 @@
           cp infinite_desktop_core.py $out/bin/
           cp *.sh $out/bin/
 
+          chmod +x $out/bin/*
+
           for script in $out/bin/*.sh; do
             wrapProgram "$script" \
               --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs.python3 pkgs.hyprland pkgs.coreutils ]}
