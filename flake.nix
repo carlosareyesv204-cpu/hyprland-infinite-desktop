@@ -14,7 +14,7 @@
         src = ./.;
 
         nativeBuildInputs = [ pkgs.makeWrapper ];
-        buildInputs = [pkgs.python3.withPackages];
+        buildInputs = [ (pkgs.python3.withPackages (ps: [ ps.evdev ])) ];
 
         installPhase = ''
           mkdir -p $out/bin
