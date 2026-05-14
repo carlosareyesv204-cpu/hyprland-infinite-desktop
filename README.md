@@ -6,9 +6,13 @@ A powerful script to transform your Hyprland workspace into an "infinite" canvas
 ## 🚀 Features
 
 -Infinite Panning: Move the entire "canvas" of floating windows by holding a modifier combination and moving your mouse.
+
 -Smart Navigation: Cycle focus between floating windows with a smooth panning animation.
+
 -App Protection: Prevents specific apps (like browsers) from losing focus accidentally during navigation.
+
 -Invert Support: Easily toggle the movement direction
+
 
 ## 🛠️ Requirements
 
