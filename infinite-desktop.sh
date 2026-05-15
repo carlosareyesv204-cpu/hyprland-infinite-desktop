@@ -2,10 +2,8 @@
 sleep 3
 SPEED=1.6
 
-# Obtener el directorio donde está este script
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# Detectar teclado - priorizando teclados reales (sin "mouse" en el nombre)
 KBD_DEV=$(python3 -c "
 import glob, os
 
@@ -55,7 +53,6 @@ if not real_keyboard:
 print(real_keyboard if real_keyboard else '')
 ")
 
-# Detectar ratón - buscar el dispositivo que es específicamente un mouse
 MOUSE_DEV=$(python3 -c "
 import glob, os
 mouse_found = None
@@ -81,7 +78,6 @@ if not mouse_found:
     print('')
 ")
 
-# Verificar detección
 if [ -z "$KBD_DEV" ]; then
     echo "❌ Error: No se pudo detectar el teclado" >&2
     echo "Dispositivos de teclado encontrados:" >&2
@@ -106,11 +102,10 @@ if [ -z "$MOUSE_DEV" ]; then
     exit 1
 fi
 
-echo "✅ Detectados: teclado=$KBD_DEV ratón=$MOUSE_DEV"
+echo "Detectados: teclado=$KBD_DEV ratón=$MOUSE_DEV"
 
-# Verificación de seguridad
 if [ "$KBD_DEV" = "$MOUSE_DEV" ]; then
-    echo "❌ ERROR: Teclado y ratón son el mismo dispositivo" >&2
+    echo "ERROR: Teclado y ratón son el mismo dispositivo" >&2
     exit 1
 fi
 
